@@ -1,0 +1,449 @@
+{
+  "record_types": [
+    {
+      "code": "ASV",
+      "sign": null,
+      "label": "ASV",
+      "form_type": "valuation"
+    },
+    {
+      "code": "EMP",
+      "sign": "+",
+      "label": "EMP",
+      "form_type": "positive"
+    },
+    {
+      "code": "VAI",
+      "sign": "+",
+      "label": "VAI",
+      "form_type": "positive"
+    },
+    {
+      "code": "SWI",
+      "sign": "+",
+      "label": "SWI",
+      "form_type": "positive"
+    },
+    {
+      "code": "PSR",
+      "sign": "-",
+      "label": "PSR",
+      "form_type": "negative"
+    },
+    {
+      "code": "TSR",
+      "sign": "-",
+      "label": "TSR",
+      "form_type": "negative"
+    },
+    {
+      "code": "CLM",
+      "sign": "-",
+      "label": "CLM",
+      "form_type": "negative"
+    },
+    {
+      "code": "TRU",
+      "sign": "-",
+      "label": "TRU",
+      "form_type": "negative"
+    },
+    {
+      "code": "DMF",
+      "sign": "-",
+      "label": "DMF",
+      "form_type": "negative"
+    },
+    {
+      "code": "DDC",
+      "sign": "-",
+      "label": "DDC",
+      "form_type": "negative"
+    },
+    {
+      "code": "SWO",
+      "sign": "-",
+      "label": "SWO",
+      "form_type": "negative"
+    }
+  ],
+  "common_fields": [
+    {
+      "field": "field_01",
+      "name": "operation_type",
+      "type": "text",
+      "input": "automatic"
+    },
+    {
+      "field": "field_02",
+      "name": "operation_id",
+      "type": "text",
+      "input": "automatic"
+    },
+    {
+      "field": "field_04",
+      "name": "company",
+      "type": "text",
+      "input": "autocomplete"
+    },
+    {
+      "field": "field_06",
+      "name": "policy_number",
+      "type": "text",
+      "input": "autocomplete"
+    },
+    {
+      "field": "field_11",
+      "name": "fund_type",
+      "type": "select",
+      "options": ["GS", "FID", "FIA", "FIC", "FE"],
+      "input": "user"
+    },
+    {
+      "field": "field_12",
+      "name": "fund_code",
+      "type": "text",
+      "input": "autocomplete"
+    },
+    {
+      "field": "field_13",
+      "name": "fund_description",
+      "type": "text",
+      "input": "user"
+    },
+    {
+      "field": "field_14",
+      "name": "currency",
+      "type": "select",
+      "options": ["EUR", "CHF", "GBP", "JPY", "USD", "SEK"],
+      "default": "EUR",
+      "input": "user"
+    },
+    {
+      "field": "field_15",
+      "name": "exchange_rate",
+      "type": "float",
+      "default": "1",
+      "input": "user"
+    },
+    {
+      "field": "field_49",
+      "name": "operation_date",
+      "type": "date",
+      "input": "user"
+    },
+    {
+      "field": "field_50",
+      "name": "effect_date",
+      "type": "date",
+      "input": "user"
+    }
+  ],
+  "valuation_fields": [
+    {
+      "field": "field_36",
+      "name": "units_invested",
+      "type": "float",
+      "default": "0",
+      "input": "user"
+    },
+    {
+      "field": "field_38",
+      "name": "unit_quotation_cur",
+      "type": "float",
+      "default": "0",
+      "input": "user"
+    },
+    {
+      "field": "field_39",
+      "name": "unit_quotation_eur",
+      "type": "float",
+      "default": "0",
+      "input": "calculated"
+    },
+    {
+      "field": "field_40",
+      "name": "asset_value_cur",
+      "type": "float",
+      "default": "0",
+      "input": "user"
+    },
+    {
+      "field": "field_41",
+      "name": "asset_value_eur",
+      "type": "float",
+      "default": "0",
+      "input": "calculated"
+    }
+  ],
+  "positive_fields": [
+    {
+      "field": "field_16",
+      "name": "gross_premium_cur",
+      "type": "float",
+      "default": "0",
+      "input": "user"
+    },
+    {
+      "field": "field_17",
+      "name": "gross_premium_eur",
+      "type": "float",
+      "default": "0",
+      "input": "calculated"
+    },
+    {
+      "field": "field_18",
+      "name": "invested_premium_cur",
+      "type": "float",
+      "default": "0",
+      "input": "user"
+    },
+    {
+      "field": "field_19",
+      "name": "invested_premium_eur",
+      "type": "float",
+      "default": "0",
+      "input": "calculated"
+    },
+    {
+      "field": "field_20",
+      "name": "entry_fee_cur",
+      "type": "float",
+      "default": "0",
+      "input": "user"
+    },
+    {
+      "field": "field_21",
+      "name": "entry_fee_eur",
+      "type": "float",
+      "default": "0",
+      "input": "calculated"
+    },
+    {
+      "field": "field_22",
+      "name": "entry_expenses_cur",
+      "type": "float",
+      "default": "0",
+      "input": "user"
+    },
+    {
+      "field": "field_23",
+      "name": "entry_expenses_eur",
+      "type": "float",
+      "default": "0",
+      "input": "calculated"
+    },
+    {
+      "field": "field_36",
+      "name": "units_invested",
+      "type": "float",
+      "default": "0",
+      "input": "user"
+    },
+    {
+      "field": "field_38",
+      "name": "unit_quotation_cur",
+      "type": "float",
+      "default": "0",
+      "input": "user"
+    },
+    {
+      "field": "field_39",
+      "name": "unit_quotation_eur",
+      "type": "float",
+      "default": "0",
+      "input": "calculated"
+    },
+    {
+      "field": "field_40",
+      "name": "asset_value_cur",
+      "type": "float",
+      "default": "0",
+      "input": "auto_copy",
+      "copy_from": "field_18"
+    },
+    {
+      "field": "field_41",
+      "name": "asset_value_eur",
+      "type": "float",
+      "default": "0",
+      "input": "auto_copy",
+      "copy_from": "field_19"
+    }
+  ],
+  "negative_fields": [
+    {
+      "field": "field_24",
+      "name": "gross_outgoing_cur",
+      "type": "float",
+      "default": "0",
+      "input": "user"
+    },
+    {
+      "field": "field_25",
+      "name": "gross_outgoing_eur",
+      "type": "float",
+      "default": "0",
+      "input": "calculated"
+    },
+    {
+      "field": "field_26",
+      "name": "net_outgoing_payment_cur",
+      "type": "float",
+      "default": "0",
+      "input": "user"
+    },
+    {
+      "field": "field_27",
+      "name": "net_outgoing_payment_eur",
+      "type": "float",
+      "default": "0",
+      "input": "calculated"
+    },
+    {
+      "field": "field_28",
+      "name": "operation_cost_cur",
+      "type": "float",
+      "default": "0",
+      "input": "user"
+    },
+    {
+      "field": "field_29",
+      "name": "operation_cost_eur",
+      "type": "float",
+      "default": "0",
+      "input": "calculated"
+    },
+    {
+      "field": "field_30",
+      "name": "tax_liq_cur",
+      "type": "float",
+      "default": "0",
+      "input": "user"
+    },
+    {
+      "field": "field_31",
+      "name": "tax_liq_eur",
+      "type": "float",
+      "default": "0",
+      "input": "calculated"
+    },
+    {
+      "field": "field_32",
+      "name": "bonus_liq_cur",
+      "type": "float",
+      "default": "0",
+      "input": "user"
+    },
+    {
+      "field": "field_33",
+      "name": "bonus_liq_eur",
+      "type": "float",
+      "default": "0",
+      "input": "calculated"
+    },
+    {
+      "field": "field_34",
+      "name": "duty_liq_cur",
+      "type": "float",
+      "default": "0",
+      "input": "user"
+    },
+    {
+      "field": "field_35",
+      "name": "duty_liq_eur",
+      "type": "float",
+      "default": "0",
+      "input": "calculated"
+    },
+    {
+      "field": "field_37",
+      "name": "units_disinvested",
+      "type": "float",
+      "default": "0",
+      "input": "user"
+    },
+    {
+      "field": "field_38",
+      "name": "unit_quotation_cur",
+      "type": "float",
+      "default": "0",
+      "input": "user"
+    },
+    {
+      "field": "field_39",
+      "name": "unit_quotation_eur",
+      "type": "float",
+      "default": "0",
+      "input": "calculated"
+    },
+    {
+      "field": "field_40",
+      "name": "asset_value_cur",
+      "type": "float",
+      "default": "0",
+      "input": "auto_copy",
+      "copy_from": "field_24"
+    },
+    {
+      "field": "field_41",
+      "name": "asset_value_eur",
+      "type": "float",
+      "default": "0",
+      "input": "auto_copy",
+      "copy_from": "field_25"
+    }
+  ],
+  "header_columns": [
+    {
+      "field": "run_start_date",
+      "label": "Data inserimento",
+      "format": "YYYY-MM-DD HH:mm"
+    },
+    {
+      "field": "run_end_date",
+      "label": "Data ultima modifica",
+      "format": "YYYY-MM-DD HH:mm"
+    },
+    {
+      "field": "filename",
+      "label": "Descrizione"
+    },
+    {
+      "field": "status_text",
+      "label": "Stato"
+    },
+    {
+      "field": "rows_imported",
+      "label": "Inseriti"
+    },
+    {
+      "field": "rows_rejected",
+      "label": "Scartati"
+    },
+    {
+      "field": "rows_recovered",
+      "label": "Recuperati"
+    },
+    {
+      "field": "last_check_start",
+      "label": "Inizio Check",
+      "format": "YYYY-MM-DD HH:mm"
+    },
+    {
+      "field": "last_check_end",
+      "label": "Fine Check",
+      "format": "YYYY-MM-DD HH:mm"
+    },
+    {
+      "field": "last_post_start",
+      "label": "Inizio Post",
+      "format": "YYYY-MM-DD HH:mm"
+    },
+    {
+      "field": "last_post_end",
+      "label": "Fine Post",
+      "format": "YYYY-MM-DD HH:mm"
+    }
+  ]
+}

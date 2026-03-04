@@ -1,0 +1,11 @@
+# Ambiente e credenziali
+.env
+
+# Test
+tests/
+
+# Claude Code
+.claude/
+
+# PhPStorm
+.idea/
