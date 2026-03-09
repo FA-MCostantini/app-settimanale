@@ -41,12 +41,21 @@ class ctl_import_settimanale
                     const app = createApp(ImportSettimanaleApp);
                     app.directive("flatpickr", {
                         mounted(el, binding) {
+                            var updateModel = function(selectedDates, dateStr) {
+                                var fieldName = el.dataset.field;
+                                if (fieldName && binding.instance && binding.instance.modalData) {
+                                    binding.instance.modalData[fieldName] = dateStr;
+                                }
+                            };
                             el._fp = flatpickr(el, {
                                 dateFormat: "d/m/Y",
                                 allowInput: true,
                                 onChange: function(selectedDates, dateStr) {
                                     el.value = dateStr;
-                                    el.dispatchEvent(new Event("input"));
+                                    updateModel(selectedDates, dateStr);
+                                },
+                                onClose: function(selectedDates, dateStr) {
+                                    updateModel(selectedDates, dateStr);
                                 }
                             });
                             if (binding.value) {

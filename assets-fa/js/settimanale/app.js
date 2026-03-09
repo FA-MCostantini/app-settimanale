@@ -1554,7 +1554,8 @@ const ImportSettimanaleApp = {
 
                                     <!-- Date (DD/MM/YYYY via Flatpickr) -->
                                     <input v-else-if="field.type === 'date'" type="text" class="form-control"
-                                           v-flatpickr="modalData[field.field]">
+                                           v-flatpickr="modalData[field.field]"
+                                           :data-field="field.field">
 
                                     <!-- Calculated -->
                                     <input v-else-if="field.input === 'calculated'" type="text" class="form-control" readonly disabled
