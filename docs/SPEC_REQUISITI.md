@@ -84,18 +84,20 @@ I requisiti seguono i pattern **EARS** (Easy Approach to Requirements Syntax):
   - **When:** L'utente clicca sull'icona "+"
   - **Then:** Si apre una modale con un campo "Descrizione" vuoto e i bottoni "Salva" e "Annulla"
 
-### REQ-UI-TST-007: Icona Cancellazione Testata Condizionale
+### REQ-UI-TST-007: Icona Cancellazione Testata
 - **Pattern:** State-driven
 - **Priorità:** Must
-- **Statement:** MENTRE una testata ha rows_imported = 0 E param_import_status_id = 1, il sistema deve mostrare un'icona cestino nell'ultima colonna che permette la cancellazione; ALTRIMENTI l'icona non deve essere visibile.
-- **Rationale:** Prevenire la cancellazione di testate con dati già elaborati o in stato avanzato.
+- **Statement:** Il sistema deve mostrare un'icona cestino sempre visibile per ogni riga testata. MENTRE una testata ha rows_imported = 0 E param_import_status_id = 1, l'icona è attiva (colore rosso, cliccabile) e permette la cancellazione; ALTRIMENTI l'icona è disabilitata (colore grigio) e al click mostra un toast di avviso "Impossibile eliminare un'importazione bloccata o contenente delle righe".
+- **Rationale:** Prevenire la cancellazione di testate con dati già elaborati o in stato avanzato, mantenendo l'interfaccia visivamente consistente.
 - **Acceptance Criteria:**
   - **Given:** Testata con id=10 ha rows_imported=0 e param_import_status_id=1
   - **When:** L'utente visualizza l'elenco
-  - **Then:** Nella riga con id=10 appare l'icona cestino
+  - **Then:** Nella riga con id=10 l'icona cestino è attiva (rossa, cliccabile)
   - **Given:** Testata con id=11 ha rows_imported=5
   - **When:** L'utente visualizza l'elenco
-  - **Then:** Nella riga con id=11 NON appare l'icona cestino
+  - **Then:** Nella riga con id=11 l'icona cestino è disabilitata (grigia)
+  - **When:** L'utente clicca sull'icona cestino disabilitata
+  - **Then:** Viene mostrato un toast di avviso
 
 ### REQ-UI-TST-008: Modifica Filename Testata
 - **Pattern:** Ubiquitous
@@ -107,15 +109,32 @@ I requisiti seguono i pattern **EARS** (Easy Approach to Requirements Syntax):
   - **When:** L'utente clicca sull'icona modifica e cambia il testo in "Nuova descrizione", poi salva
   - **Then:** Il campo filename viene aggiornato a "Nuova descrizione" e la modale si chiude
 
-### REQ-UI-TST-009: Colonna Lucchetto Stato Testata
+### REQ-UI-TST-009: Colonne Azioni Testata
 - **Pattern:** Ubiquitous
 - **Priorità:** Must
-- **Statement:** Il sistema deve mostrare nell'ultima colonna di ogni riga testata un'icona lucchetto: aperto (bi-unlock-fill, verde) se param_import_status_id = 1, chiuso (bi-lock-fill, rosso) se param_import_status_id = 2. Cliccando l'icona il sistema deve alternare lo stato tra 1 e 2. Per stati diversi da 1 e 2, il lucchetto è chiuso e non cliccabile.
-- **Rationale:** Permettere agli operatori di bloccare/sbloccare le testate per la modifica.
+- **Statement:** Il sistema deve mostrare per ogni riga testata, dopo le colonne dati, tre colonne azione nell'ordine: (1) Link esterno (bi-box-arrow-up-right) — attivo (colore link, apre `/import/{id}` in nuova scheda) se param_import_status_id != 1, disabilitato (grigio) se param_import_status_id = 1; (2) Lucchetto — aperto (bi-unlock-fill, verde) se param_import_status_id = 1, chiuso (bi-lock-fill, rosso) se param_import_status_id = 2, chiuso grigio non cliccabile per altri stati; (3) Cestino — come da REQ-UI-TST-007. La colonna Descrizione (filename) deve mostrare testo semplice senza link.
+- **Rationale:** Permettere agli operatori di accedere alla vista esterna, bloccare/sbloccare e cancellare le testate con interfaccia chiara.
 - **Acceptance Criteria:**
   - **Given:** Testata con param_import_status_id = 1
+  - **When:** L'utente visualizza l'elenco
+  - **Then:** Il link esterno e' disabilitato (grigio), il lucchetto e' aperto (verde), il cestino segue REQ-UI-TST-007
+  - **Given:** Testata con param_import_status_id = 2
   - **When:** L'utente clicca sul lucchetto
-  - **Then:** Lo stato diventa 2 (lucchetto chiuso, rosso) e tutte le operazioni di modifica vengono disabilitate
+  - **Then:** Lo stato diventa 1 (lucchetto aperto, verde)
+  - **When:** L'utente clicca sul link esterno
+  - **Then:** Si apre una nuova scheda con `/import/{id}`
+
+### REQ-UI-TST-009b: Icone Azioni nella Vista Dettaglio Righe
+- **Pattern:** Ubiquitous
+- **Priorità:** Must
+- **Statement:** Il sistema deve mostrare nella vista dettaglio righe, sulla riga informativa "Inserimento: ... | Ultima modifica: ..." allineate a destra, le stesse tre icone della tabella testate nello stesso ordine (Link esterno, Lucchetto, Cestino) con identica logica di abilitazione/disabilitazione. Il filename nel summary della testata deve essere testo semplice senza link.
+- **Rationale:** Permettere all'operatore di gestire lo stato della testata direttamente dalla vista dettaglio senza dover tornare alla tabella testate.
+- **Acceptance Criteria:**
+  - **Given:** L'utente e' nella vista dettaglio di una testata con param_import_status_id = 2
+  - **When:** La pagina si carica
+  - **Then:** Sulla riga info appaiono le tre icone: link esterno attivo, lucchetto chiuso rosso, cestino disabilitato
+  - **When:** L'utente clicca sul lucchetto
+  - **Then:** Lo stato diventa 1, il lucchetto diventa aperto verde, il link esterno diventa disabilitato, i bottoni tipo record appaiono
 
 ### REQ-UI-TST-010: Guardia Modifiche su Testata Bloccata
 - **Pattern:** State-driven

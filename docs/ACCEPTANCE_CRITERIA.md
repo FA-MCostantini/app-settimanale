@@ -98,14 +98,14 @@ Given la testata con id=10 ha:
     - rows_imported: 0
     - param_import_status_id: 1
 When l'utente visualizza l'elenco testate
-Then nella riga id=10 appare l'icona cestino
+Then nella riga id=10 l'icona cestino e' attiva (rossa, cliccabile)
 When l'utente clicca sull'icona cestino
 Then appare una modale di conferma "Sei sicuro di voler cancellare questa testata?"
 When l'utente clicca "Conferma"
 Then viene eseguita una chiamata POST con action=header_delete, id=10
   And il backend cancella il record con id=10
   And la tabella viene ricaricata
-  And la riga id=10 non è più visibile
+  And la riga id=10 non e' piu' visibile
 ```
 
 ### AC-TST-005: Cancellazione Testata Negata
@@ -117,8 +117,10 @@ Given la testata con id=20 ha:
     - rows_imported: 5
     - param_import_status_id: 1
 When l'utente visualizza l'elenco testate
-Then nella riga id=20 NON appare l'icona cestino
-  And non è possibile tentare la cancellazione dalla UI
+Then nella riga id=20 l'icona cestino e' disabilitata (grigia)
+When l'utente clicca sull'icona cestino disabilitata
+Then viene mostrato un toast di avviso "Impossibile eliminare un'importazione bloccata o contenente delle righe"
+  And nessuna modale di conferma viene aperta
 
 Scenario alternativo: tentativo via API diretta
 Given la testata con id=21 ha rows_imported: 3
@@ -136,7 +138,9 @@ Given la testata con id=30 ha:
     - rows_imported: 0
     - param_import_status_id: 2 (non iniziale)
 When l'utente visualizza l'elenco testate
-Then nella riga id=30 NON appare l'icona cestino
+Then nella riga id=30 l'icona cestino e' disabilitata (grigia)
+When l'utente clicca sull'icona cestino disabilitata
+Then viene mostrato un toast di avviso "Impossibile eliminare un'importazione bloccata o contenente delle righe"
 ```
 
 ### AC-TST-007: Paginazione Testate

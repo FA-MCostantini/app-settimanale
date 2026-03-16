@@ -1181,7 +1181,7 @@ Una testata può essere cancellata **SOLO** se entrambe le condizioni sono soddi
 1. `rows_imported = 0` (nessun record associato)
 2. `param_import_status_id = 1` (stato "Iniziale")
 
-Il frontend deve mostrare l'icona cestino **solo** se entrambe le condizioni sono vere.
+Il frontend deve mostrare l'icona cestino **sempre visibile**. Se entrambe le condizioni sono vere, l'icona e' attiva (rossa, cliccabile); altrimenti e' disabilitata (grigia) e al click mostra un toast "Impossibile eliminare un'importazione bloccata o contenente delle righe".
 
 Il backend deve verificare le condizioni prima di procedere con la cancellazione:
 

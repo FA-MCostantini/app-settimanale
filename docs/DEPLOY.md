@@ -91,7 +91,7 @@ I due file Ajax sono separati per motivi di sicurezza:
 | File | Metodo HTTP | Operazioni |
 |------|-------------|-----------|
 | `ajax_import_settimanale_view.php` | GET | `config`, `headers`, `records`, `autocomplete` |
-| `ajax_import_settimanale_save.php` | POST | `header_save`, `header_delete`, `record_save`, `record_delete` |
+| `ajax_import_settimanale_save.php` | POST | `header_save`, `header_delete`, `header_toggle_status`, `record_save`, `record_delete`, `record_reorder` |
 
 ### Verifiche necessarie
 

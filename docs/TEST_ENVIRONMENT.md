@@ -96,7 +96,9 @@ Il frontend resta in un unico file monolitico `app.js` (~1200 righe).
 - [x] Filtro (digita testo, verifica filtraggio)
 - [x] Sort 3 stati su colonne diverse
 - [x] Gestione errori (simulare errore backend, verificare DEV vs PROD)
-- [x] Condizioni cancellazione testata (cestino appare/scompare)
+- [x] Condizioni cancellazione testata (cestino sempre visibile, abilitato/disabilitato con toast)
+- [x] Link esterno testata (attivo/disabilitato in base allo stato, apre nuova scheda)
+- [x] Lucchetto toggle da vista dettaglio righe (stesso comportamento tabella testate)
 
 ---
 

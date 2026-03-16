@@ -37,7 +37,7 @@ FROM data.import_tracking t
 LEFT JOIN data.param_import_status ps
     ON ps.id = t.param_import_status_id
 WHERE t.import_main_id = 1120
-ORDER BY t.run_start_date ASC
+ORDER BY t.run_start_date DESC
 LIMIT 1000
 ```
 

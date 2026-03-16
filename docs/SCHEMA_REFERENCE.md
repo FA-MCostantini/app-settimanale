@@ -184,8 +184,8 @@ Tabella di lookup per gli stati dell'import.
 | `field_13` | fund_description | Auto | Da fund_code | - | Auto-compilato dalla selezione fund_code |
 | `field_14` | currency | Dropdown | EUR | Obbligatorio | Valori: EUR, CHF, GBP, JPY, USD, SEK |
 | `field_15` | exchange_rate | Float | 1 | > 0 | Tasso di cambio |
-| `field_49` | operation_date | Date | - | YYYY-MM-DD | Data operazione |
-| `field_50` | effect_date | Date | - | YYYY-MM-DD | Data effetto |
+| `field_49` | operation_date | Date | - | DD/MM/YYYY | Data operazione (Flatpickr) |
+| `field_50` | effect_date | Date | - | DD/MM/YYYY | Data effetto (Flatpickr) |
 
 **Formula conversione valuta:**
 ```

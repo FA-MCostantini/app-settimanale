@@ -257,9 +257,21 @@ L'ordine di visualizzazione nella tabella record segue questa sequenza, dove "/"
 
 | param_import_status_id | description_2 | Significato |
 |------------------------|---------------|-------------|
-| 1 | Iniziale | Testata aperta e modificabile. Lucchetto aperto (verde). Eliminabile se rows_imported=0 |
-| 2 | Validato | Testata chiusa e bloccata. Lucchetto chiuso (rosso). Nessuna modifica consentita ai record o al filename |
-| ... | Altri stati | Gestiti da processi esterni (check, posting) — NON gestiti dall'applicazione Settimanale. Lucchetto chiuso e non cliccabile |
+| 1 | Iniziale | Testata aperta e modificabile. Lucchetto aperto (verde). Link esterno disabilitato (grigio). Cestino attivo se rows_imported=0, altrimenti disabilitato con toast |
+| 2 | Validato | Testata chiusa e bloccata. Lucchetto chiuso (rosso). Link esterno attivo (apre nuova scheda). Cestino disabilitato con toast. Nessuna modifica consentita ai record o al filename |
+| ... | Altri stati | Gestiti da processi esterni (check, posting) — NON gestiti dall'applicazione Settimanale. Lucchetto chiuso e non cliccabile. Link esterno attivo. Cestino disabilitato con toast |
+
+### Icone Azioni Testata (ordine colonne)
+
+Le icone azioni sono presenti sia nella tabella testate che nella vista dettaglio righe, nello stesso ordine:
+
+| Icona | Bootstrap Icon | Attiva quando | Disabilitata quando | Click su disabilitata |
+|-------|---------------|--------------|--------------------|--------------------|
+| Link esterno | bi-box-arrow-up-right | status_id != 1 | status_id = 1 | nessuna azione |
+| Lucchetto | bi-unlock-fill / bi-lock-fill | status_id = 1 o 2 | status_id >= 3 | nessuna azione |
+| Cestino | bi-trash-fill | rows_imported = 0 AND status_id = 1 | altrimenti | toast di avviso |
+
+**Nota:** La colonna Descrizione (filename) e' sempre testo semplice senza link. L'accesso alla vista esterna avviene esclusivamente tramite l'icona Link esterno.
 
 ---
 
