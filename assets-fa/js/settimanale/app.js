@@ -546,6 +546,14 @@ const ImportSettimanaleApp = {
             return header.rows_imported === 0 && header.param_import_status_id === 1;
         },
 
+        handleDisabledDelete(header) {
+            this.showToast('Impossibile eliminare un\'importazione bloccata o contenente delle righe', 'error');
+        },
+
+        isHeaderLocked(header) {
+            return header.param_import_status_id !== 1;
+        },
+
         async toggleHeaderStatus(header) {
             try {
                 this.loading = true;
@@ -932,7 +940,7 @@ const ImportSettimanaleApp = {
         showToast(message, type) {
             if (type === undefined) type = 'success';
             this.toast = { show: true, message: message, type: type };
-            setTimeout(() => { this.toast.show = false; }, 3000);
+            setTimeout(() => { this.toast.show = false; }, type === 'error' ? 9000 : 6000);
         },
 
         // === FIELD APPLICABILITY ===
@@ -1214,6 +1222,7 @@ const ImportSettimanaleApp = {
                                         </th>
                                         <th class="fw-bold" style="width: 50px;"></th>
                                         <th class="fw-bold" style="width: 50px;"></th>
+                                        <th class="fw-bold" style="width: 50px;"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -1224,17 +1233,16 @@ const ImportSettimanaleApp = {
                                             </button>
                                         </td>
                                         <td v-for="col in config.header_columns" :key="col.field">
-                                            <a v-if="col.field === 'filename'" :href="'/import/' + header.id" class="text-decoration-none">
-                                                {{ header[col.field] || '-' }}
-                                            </a>
-                                            <template v-else>{{ header[col.field] || '-' }}</template>
+                                            {{ header[col.field] || '-' }}
                                         </td>
                                         <td class="text-center">
-                                            <button v-if="canDeleteHeader(header)"
-                                                    class="btn btn-sm btn-link text-danger"
-                                                    @click="deleteHeader(header)">
-                                                <i class="bi bi-trash-fill"></i>
-                                            </button>
+                                            <a v-if="isHeaderLocked(header)"
+                                               :href="'/import/' + header.id" target="_blank"
+                                               class="btn btn-sm btn-link text-primary"
+                                               title="Apri l'importazione">
+                                                <i class="bi bi-box-arrow-up-right"></i>
+                                            </a>
+                                            <i v-else class="bi bi-box-arrow-up-right text-secondary"></i>
                                         </td>
                                         <td class="text-center">
                                             <button v-if="header.param_import_status_id === 1"
@@ -1251,9 +1259,23 @@ const ImportSettimanaleApp = {
                                             </button>
                                             <i v-else class="bi bi-lock-fill text-secondary"></i>
                                         </td>
+                                        <td class="text-center">
+                                            <button v-if="canDeleteHeader(header)"
+                                                    class="btn btn-sm btn-link text-danger"
+                                                    title="Elimina testata"
+                                                    @click="deleteHeader(header)">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
+                                            <button v-else
+                                                    class="btn btn-sm btn-link text-secondary"
+                                                    title="Eliminazione non disponibile"
+                                                    @click="handleDisabledDelete(header)">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
+                                        </td>
                                     </tr>
                                     <tr v-if="paginatedHeaders.length === 0">
-                                        <td :colspan="config.header_columns.length + 3" class="text-center text-muted">
+                                        <td :colspan="config.header_columns.length + 4" class="text-center text-muted">
                                             Nessuna testata trovata
                                         </td>
                                     </tr>
@@ -1296,9 +1318,7 @@ const ImportSettimanaleApp = {
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                     <div v-if="!editingFilename" class="d-flex align-items-center">
-                                        <a :href="'/import/' + selectedHeader.id" class="text-decoration-none">
-                                            <h4 class="mb-0 me-2">{{ selectedHeader.filename }}</h4>
-                                        </a>
+                                        <h4 class="mb-0 me-2">{{ selectedHeader.filename }}</h4>
                                         <button v-if="isHeaderEditable" class="btn btn-sm btn-link" @click="startEditFilename">
                                             <i class="bi bi-pencil"></i>
                                         </button>
@@ -1317,9 +1337,47 @@ const ImportSettimanaleApp = {
                                         <span class="badge bg-info">{{ selectedHeader.rows_imported }} record</span>
                                     </div>
                                 </div>
-                                <div class="text-muted small">
-                                    Inserimento: {{ selectedHeader.run_start_date }} |
-                                    Ultima modifica: {{ selectedHeader.run_end_date || '-' }}
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="text-muted small">
+                                        Inserimento: {{ selectedHeader.run_start_date }} |
+                                        Ultima modifica: {{ selectedHeader.run_end_date || '-' }}
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <a v-if="isHeaderLocked(selectedHeader)"
+                                           :href="'/import/' + selectedHeader.id" target="_blank"
+                                           class="btn btn-sm btn-link text-primary"
+                                           title="Apri in nuova scheda">
+                                            <i class="bi bi-box-arrow-up-right"></i>
+                                        </a>
+                                        <i v-else class="bi bi-box-arrow-up-right text-secondary"></i>
+
+                                        <button v-if="selectedHeader.param_import_status_id === 1"
+                                                class="btn btn-sm btn-link text-success"
+                                                title="Blocca testata"
+                                                @click="toggleHeaderStatus(selectedHeader)">
+                                            <i class="bi bi-unlock-fill"></i>
+                                        </button>
+                                        <button v-else-if="selectedHeader.param_import_status_id === 2"
+                                                class="btn btn-sm btn-link text-danger"
+                                                title="Sblocca testata"
+                                                @click="toggleHeaderStatus(selectedHeader)">
+                                            <i class="bi bi-lock-fill"></i>
+                                        </button>
+                                        <i v-else class="bi bi-lock-fill text-secondary"></i>
+
+                                        <button v-if="canDeleteHeader(selectedHeader)"
+                                                class="btn btn-sm btn-link text-danger"
+                                                title="Elimina testata"
+                                                @click="deleteHeader(selectedHeader)">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
+                                        <button v-else
+                                                class="btn btn-sm btn-link text-secondary"
+                                                title="Eliminazione non disponibile"
+                                                @click="handleDisabledDelete(selectedHeader)">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
